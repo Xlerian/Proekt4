@@ -17,6 +17,7 @@ mapp = m.Map()
 camera = ca.Camera(player)
 npc = spr.NPC(mapp.spisok_kartinok[119],(576,576))
 
+
 while a == 0:
     events = p.event.get()
     for one_event in events:

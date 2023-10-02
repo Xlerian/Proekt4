@@ -104,18 +104,31 @@ class NPC:
         self.xitbox = p.Rect(x_y, (sett.SIZE,sett.SIZE))
         self.x_y = x_y
         self.igrok_radom = False
+        self.sms = SMS((self.xitbox.x , self.xitbox.y - 30), 'Hello')
 
     def prorisovka (self,okno,camera):
         camera_xitbox = camera.zamena_camera(self)
         okno.blit(self.kartinka, camera_xitbox)
+        if self.igrok_radom == True:
+            self.sms.xitbox.x = self.xitbox.x
+            self.sms.xitbox.y = self.xitbox.y - 30
+            self.sms.prorisovka(okno,camera)
     
     def dvizenie (self):
         if self.igrok_radom == False:
             self.xitbox.x += self.skorostx
-            if self.x_y[0] < self.xitbox.x - 20:
+            if self.x_y[0] < self.xitbox.x - 200:
                 self.skorostx = -self.skorostx
-            if self.x_y[0] > self.xitbox.x + 20:
+            if self.x_y[0] > self.xitbox.x + 200:
                 self.skorostx = -self.skorostx
 class SMS:
     def __init__(self,x_y,text):
-        self.xitbox = p.Rect(x_y, )
+        size = 15
+        self.text = text
+        text_size = len(text)*size
+        self.xitbox = p.Rect(x_y, (text_size, text_size) )
+        self.object = pf.Font('text.ttf',20)
+         
+    def prorisovka (self,okno,camera):
+        camera_xitbox = camera.zamena_camera(self)
+        self.object.render_to(okno,camera_xitbox,self.text)
